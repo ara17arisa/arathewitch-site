@@ -1,437 +1,631 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ARA THE WITCH — Esoteric Systems & Matrix Synthesis</title>
-  
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            burgundy: {
-              DEFAULT: '#3b0005',
-              dark: '#220003',
-              card: '#2d0004',
-              hover: '#4a0007',
-            },
-            cream: {
-              DEFAULT: '#f4eae1',
-              muted: '#c4aead',
-              dark: '#8a7271',
-            },
-            gold: {
-              DEFAULT: '#d4af37',
-              light: '#f3e5ab',
-              dark: '#aa820a',
-            }
-          },
-          fontFamily: {
-            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-            sans: ['Montserrat', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
-
   <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #220003;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #3b0005;
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #d4af37;
+    :root {
+      --bg-burgundy: #3b0005;
+      --bg-dark-burgundy: #220003;
+      --bg-card: #2d0004;
+      --text-cream: #f4eae1;
+      --text-muted: #c4aead;
+      --accent-gold: #d4af37;
+      --border-color: rgba(212, 175, 55, 0.25);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Montserrat', sans-serif;
     }
 
-    /* Ambient glow */
-    .candle-glow {
-      background: radial-gradient(circle at 50% 30%, rgba(88, 0, 15, 0.55) 0%, rgba(34, 0, 3, 0.98) 75%);
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    .gold-glow-border {
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    body {
+      background-color: var(--bg-burgundy);
+      color: var(--text-cream);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      letter-spacing: 0.02em;
+      overflow-x: hidden;
     }
-    .gold-glow-border:hover {
-      border-color: rgba(212, 175, 55, 0.6);
-      box-shadow: 0 0 35px rgba(212, 175, 55, 0.15);
+
+    h1, h2, h3, h4, .serif-text {
+      font-family: var(--font-serif);
+      font-weight: 400;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(34, 0, 3, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-cream);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent-gold);
+    }
+
+    .nav-portal-btn {
+      border: 1px solid var(--accent-gold);
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      color: var(--accent-gold) !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .nav-portal-btn:hover {
+      background: var(--accent-gold);
+      color: var(--bg-burgundy) !important;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 95vh;
+      padding: 9rem 2rem 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: radial-gradient(circle at center, rgba(90, 0, 0, 0.65) 0%, var(--bg-dark-burgundy) 100%);
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--accent-gold);
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 1.4rem;
+      border-radius: 50px;
+      margin-bottom: 2.5rem;
+      background: rgba(45, 0, 4, 0.4);
+    }
+
+    /* Hero Typography Block */
+    .hero-title-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: var(--text-cream);
+      letter-spacing: 0.08em;
+      font-weight: 400;
+    }
+
+    .subtitle-esoteric {
+      font-family: var(--font-serif);
+      font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-cream);
+      line-height: 1.2;
+      margin-top: 0.5rem;
+      width: 100%;
+      max-width: 580px;
+      text-align: center;
+    }
+
+    .subtitle-matrix {
+      font-family: var(--font-serif);
+      font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--accent-gold);
+      line-height: 1.2;
+      margin-top: 0.2rem;
+      width: 100%;
+      max-width: 580px;
+      text-align: center;
+    }
+
+    .hero-description {
+      font-size: 1.05rem;
+      max-width: 680px;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .btn-primary {
+      padding: 0.9rem 2.2rem;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-cream);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+    }
+
+    .btn-gold {
+      padding: 0.9rem 2.2rem;
+      background: transparent;
+      border: 1px solid var(--accent-gold);
+      color: var(--accent-gold);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-gold:hover {
+      background: var(--accent-gold);
+      color: var(--bg-burgundy);
+    }
+
+    /* Sections Container */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--accent-gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--text-cream);
+    }
+
+    /* Pillars Grid */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+
+    .pillar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 2.8rem 2rem;
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .pillar-num {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      color: var(--accent-gold);
+      opacity: 0.6;
+      margin-bottom: 1rem;
+    }
+
+    .pillar-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1.2rem;
+      color: var(--text-cream);
+    }
+
+    .pillar-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* Horizontal System Box */
+    .system-box {
+      background: linear-gradient(135deg, rgba(45, 0, 4, 0.9) 0%, rgba(34, 0, 3, 0.95) 100%);
+      border: 1px solid var(--accent-gold);
+      border-radius: 12px;
+      padding: 3.5rem 3rem;
+      margin-top: 2.5rem;
+      text-align: center;
+    }
+
+    .system-box h3 {
+      font-size: 2.2rem;
+      color: var(--accent-gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .system-box p {
+      color: var(--text-cream);
+      font-size: 1.1rem;
+      font-weight: 300;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* Coming Soon Books Section */
+    .books-section {
+      background: var(--bg-dark-burgundy);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      max-width: 100%;
+      padding: 7rem 2rem;
+    }
+
+    .books-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .book-card {
+      background: var(--bg-burgundy);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .book-tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent-gold);
+      border: 1px solid var(--border-color);
+      padding: 0.3rem 0.9rem;
+      border-radius: 50px;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    .book-card h4 {
+      font-size: 1.8rem;
+      color: var(--text-cream);
+      margin-bottom: 1rem;
+    }
+
+    .book-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 300;
+    }
+
+    /* Philosophy Section */
+    .philosophy-container {
+      text-align: center;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .philosophy-text {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.9;
+      margin-bottom: 2.5rem;
+    }
+
+    .quote-block {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-style: italic;
+      color: var(--text-cream);
+      margin: 3.5rem 0;
+      position: relative;
+      padding: 0 2rem;
+    }
+
+    .quote-block::before {
+      content: "“";
+      font-size: 4rem;
+      color: var(--accent-gold);
+      position: absolute;
+      left: -1rem;
+      top: -1.5rem;
+      opacity: 0.4;
+    }
+
+    /* Business Card Contact Block */
+    .business-card-section {
+      padding: 6rem 2rem 8rem;
+    }
+
+    .business-card {
+      background: linear-gradient(145deg, #320004 0%, #1a0002 100%);
+      border: 1px solid var(--accent-gold);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      border-radius: 16px;
+      padding: 4rem 3rem;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+
+    .card-brand {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .card-sub {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--text-cream);
+      margin-bottom: 2.5rem;
+    }
+
+    .card-divider {
+      width: 50px;
+      height: 1px;
+      background: var(--accent-gold);
+      margin: 0 auto 2.5rem;
+      opacity: 0.5;
+    }
+
+    .card-contacts {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      align-items: center;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--text-cream);
+      font-size: 1.05rem;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item i {
+      color: var(--accent-gold);
+      font-size: 1.2rem;
+      width: 24px;
+      text-align: center;
+    }
+
+    .contact-item:hover {
+      color: var(--accent-gold);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 3rem 2rem;
+      background: var(--bg-dark-burgundy);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding-top: 8rem; }
+      .business-card { padding: 3rem 1.5rem; }
+      .system-box { padding: 2.5rem 1.5rem; }
     }
   </style>
 </head>
-<body class="bg-burgundy-dark text-cream font-sans antialiased selection:bg-burgundy-hover selection:text-gold min-h-screen flex flex-col">
+<body>
 
-  <!-- Navigation Bar -->
-  <nav class="fixed top-0 left-0 w-full z-50 bg-burgundy-dark/95 backdrop-blur-md border-b border-gold/20 transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-      <a href="#" class="flex flex-col">
-        <span class="font-serif text-2xl tracking-[0.2em] text-cream font-semibold uppercase hover:text-gold transition-colors">Ara the Witch</span>
-        <span class="text-[9px] tracking-[0.3em] text-gold uppercase font-light">Esoteric Expert</span>
-      </a>
-
-      <!-- Desktop Links -->
-      <div class="hidden md:flex items-center space-x-10 text-xs tracking-[0.2em] uppercase font-light">
-        <a href="#about" class="text-cream-muted hover:text-gold transition-colors">About & Practice</a>
-        <a href="#framework" class="text-cream-muted hover:text-gold transition-colors">AstroTarotMatrix</a>
-        <a href="#connect" class="text-cream-muted hover:text-gold transition-colors">Connect</a>
-        <a href="#portal" class="px-5 py-2.5 rounded-full border border-gold/50 text-gold hover:bg-gold hover:text-burgundy-dark transition-all duration-300 font-medium">Reading Portal</a>
-      </div>
-
-      <!-- Mobile Menu Button -->
-      <button id="mobile-menu-btn" class="md:hidden text-cream hover:text-gold p-2 focus:outline-none" aria-label="Toggle menu">
-        <i class="fa-solid fa-bars text-xl"></i>
-      </button>
-    </div>
-
-    <!-- Mobile Navigation Drawer -->
-    <div id="mobile-menu" class="hidden md:hidden bg-burgundy-card border-b border-gold/20 px-6 py-6 space-y-4 text-center">
-      <a href="#about" class="block text-cream-muted hover:text-gold uppercase text-xs tracking-widest py-2">About & Practice</a>
-      <a href="#framework" class="block text-cream-muted hover:text-gold uppercase text-xs tracking-widest py-2">AstroTarotMatrix</a>
-      <a href="#connect" class="block text-cream-muted hover:text-gold uppercase text-xs tracking-widest py-2">Connect</a>
-      <a href="#portal" class="inline-block mt-2 px-6 py-2.5 rounded-full border border-gold text-gold hover:bg-gold hover:text-burgundy-dark transition-all text-xs tracking-widest uppercase">Reading Portal</a>
-    </div>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-brand">Ara the Witch</div>
+    <ul class="nav-links">
+      <li><a href="#about" class="active">About & Practice</a></li>
+      <li><a href="#matrix">AstroTarotMatrix</a></li>
+      <li><a href="#connect">Connect</a></li>
+      <li><a href="#portal" class="nav-portal-btn">Reading Portal</a></li>
+    </ul>
   </nav>
 
   <!-- Hero Section -->
-  <header class="relative min-h-screen flex items-center justify-center candle-glow px-6 pt-28 pb-16 overflow-hidden">
-    <div class="max-w-4xl mx-auto text-center space-y-6 relative z-10">
-      
-      <div class="inline-flex items-center space-x-3 px-4 py-1.5 rounded-full border border-gold/30 bg-burgundy-card/60 backdrop-blur-sm text-gold text-xs tracking-[0.25em] uppercase">
-        <i class="fa-solid fa-compass text-[10px]"></i>
-        <span>Structural Analysis • Evolutionary Esotericism</span>
-      </div>
+  <header class="hero" id="about">
+    <div class="hero-badge">Structural Analysis • Evolutionary Esotericism</div>
+    
+    <div class="hero-title-group">
+      <h1 class="hero-title">Ara the Witch</h1>
+      <div class="subtitle-esoteric">Esoteric Expert</div>
+      <div class="subtitle-matrix">AstroTarotMatrix</div>
+    </div>
 
-      <!-- Main Title Block (Tighter letter spacing & exact block alignment) -->
-      <div class="flex flex-col items-center pt-2">
-        <h1 class="font-serif text-5xl sm:text-7xl font-normal tracking-[0.06em] uppercase text-cream leading-none">
-          Ara the Witch
-        </h1>
-        
-        <div class="w-full max-w-[420px] sm:max-w-[500px] space-y-1 mt-4">
-          <div class="font-serif text-lg sm:text-2xl text-cream uppercase font-normal tracking-[0.18em] text-center">
-            ESOTERIC EXPERT
-          </div>
-          <div class="font-serif text-base sm:text-xl text-gold uppercase font-normal tracking-[0.06em] text-center">
-            ASTROTAROTMATRIX
-          </div>
-        </div>
-      </div>
+    <p class="hero-description">
+      Deconstructing the geometry of your natal chart, Matrix of Destiny numerology channels, and tarot archetypes into an objective, actionable blueprint for personal sovereignty.
+    </p>
 
-      <div class="w-16 h-px bg-gold/50 mx-auto my-4"></div>
-
-      <p class="text-sm sm:text-base text-cream-muted max-w-2xl mx-auto font-light leading-relaxed tracking-wide">
-        Deconstructing the geometry of your natal chart, Matrix of Destiny numerology channels, and tarot archetypes into an objective, actionable blueprint for personal sovereignty.
-      </p>
-
-      <div class="pt-6 flex flex-col sm:flex-row items-center justify-center gap-5">
-        <a href="#framework" class="px-8 py-3.5 rounded-full border border-gold/40 text-gold hover:bg-gold hover:text-burgundy-dark transition-all duration-300 text-xs tracking-[0.2em] uppercase font-medium">
-          Explore The Practice
-        </a>
-        <a href="#portal" class="px-8 py-3.5 rounded-full bg-burgundy-card hover:bg-burgundy border border-gold/30 text-cream hover:text-gold transition-all duration-300 text-xs tracking-[0.2em] uppercase font-light">
-          Access Portal
-        </a>
-      </div>
-
+    <div class="hero-actions">
+      <a href="#matrix" class="btn-primary">Explore the Practice</a>
+      <a href="#portal" class="btn-gold">Access Portal</a>
     </div>
   </header>
 
-  <!-- About Section -->
-  <section id="about" class="py-28 px-6 lg:px-12 max-w-6xl mx-auto border-t border-gold/10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-      
-      <!-- Portrait Placeholder -->
-      <div class="lg:col-span-5 relative">
-        <div class="relative rounded-xl overflow-hidden gold-glow-border bg-burgundy-card p-3">
-          <img src="https://placehold.co/600x750/220003/f4eae1?text=Ara+The+Witch%0AAtmospheric+Portrait" 
-               alt="Ara The Witch Portrait" 
-               class="w-full h-auto rounded-lg object-cover grayscale opacity-90 hover:opacity-100 hover:grayscale-0 transition-all duration-700">
-          <div class="absolute inset-0 bg-gradient-to-t from-burgundy-dark via-transparent to-transparent opacity-60"></div>
-        </div>
-      </div>
-
-      <!-- Narrative Text -->
-      <div class="lg:col-span-7 space-y-6 text-cream-muted">
-        <div class="space-y-2">
-          <span class="text-gold text-xs font-semibold tracking-[0.25em] uppercase">My Approach</span>
-          <h2 class="font-serif text-3xl sm:text-4xl text-cream font-normal">System Synthesis Over Fortune Telling</h2>
-        </div>
-
-        <p class="text-sm sm:text-base leading-relaxed font-light">
-          Welcome to a space dedicated to rigorous esoteric investigation. I do not offer vague horoscopes or deterministic predictions. My work approaches ancient symbolic systems as geometric frameworks and psychological matrices designed to evaluate active life dynamics, timing vectors, and structural patterns.
-        </p>
-
-        <p class="text-sm sm:text-base leading-relaxed font-light">
-          By cross-examining Tropical Astrology (house cusps, dignities, and transit geometry), Matrix of Destiny numerology, and archetypal card layouts, every reading becomes an analytical diagnosis—providing objective clarity so you can navigate life choices with sovereign authority.
-        </p>
-
-        <div class="pt-4 border-t border-gold/10 grid grid-cols-2 gap-6 font-serif">
-          <div>
-            <span class="block text-2xl text-gold font-light">Analytical</span>
-            <span class="text-xs text-cream-muted font-sans font-light uppercase tracking-widest">Mathematical Geometry</span>
-          </div>
-          <div>
-            <span class="block text-2xl text-gold font-light">Sovereign</span>
-            <span class="text-xs text-cream-muted font-sans font-light uppercase tracking-widest">Empowerment Focused</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Section 1: The Pillars & AstroTarotMatrix System -->
-  <section id="framework" class="py-28 px-6 lg:px-12 max-w-6xl mx-auto border-t border-gold/10">
-    <div class="space-y-12">
-      
-      <div class="text-center space-y-4 max-w-2xl mx-auto">
-        <span class="text-gold text-xs font-semibold tracking-[0.25em] uppercase">The Pillars</span>
-        <h2 class="font-serif text-3xl sm:text-5xl text-cream font-normal">The Multi-System Matrix</h2>
-        <p class="text-xs text-cream-muted font-light tracking-wide">How distinct traditions unite to form a comprehensive analytical framework.</p>
-      </div>
-
-      <!-- The 3 Pillars Cards Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <!-- Pillar 1 -->
-        <div class="p-8 rounded-xl bg-burgundy-card/60 border border-gold/20 space-y-4">
-          <span class="font-serif text-3xl text-gold/60 block">01</span>
-          <h3 class="font-serif text-2xl text-cream">Tropical Astrology</h3>
-          <p class="text-xs text-cream-muted font-light leading-relaxed">
-            Mapping natal chart positions, Whole Sign and Placidus house rulers, planetary dignities, and transit geometry to outline timing, wealth vectors, and relational dynamics.
-          </p>
-        </div>
-
-        <!-- Pillar 2 -->
-        <div class="p-8 rounded-xl bg-burgundy-card/60 border border-gold/20 space-y-4">
-          <span class="font-serif text-3xl text-gold/60 block">02</span>
-          <h3 class="font-serif text-2xl text-cream">Matrix of Destiny</h3>
-          <p class="text-xs text-cream-muted font-light leading-relaxed">
-            Calculating personal numerology channels to analyze karmic tails, subconscious relationship blocks, financial flow zones, and soul potential programs.
-          </p>
-        </div>
-
-        <!-- Pillar 3 -->
-        <div class="p-8 rounded-xl bg-burgundy-card/60 border border-gold/20 space-y-4">
-          <span class="font-serif text-3xl text-gold/60 block">03</span>
-          <h3 class="font-serif text-2xl text-cream">Tarot & Oracle Archetypes</h3>
-          <p class="text-xs text-cream-muted font-light leading-relaxed">
-            Utilizing multi-deck spreads to capture immediate psychological dynamics, environmental nuances, and micro-timing triggers to ground the chart reading.
-          </p>
-        </div>
-
-      </div>
-
-      <!-- Full-Width Horizontal Synthesis Box -->
-      <div class="p-8 sm:p-10 rounded-xl bg-burgundy-card border border-gold/30 gold-glow-border text-center space-y-4 max-w-6xl mx-auto">
-        <div class="text-xs text-gold font-semibold tracking-[0.25em] uppercase">Integrated Framework</div>
-        <h3 class="font-serif text-3xl sm:text-4xl text-cream">The AstroTarotMatrix System</h3>
-        <p class="text-sm sm:text-base text-cream-muted font-light leading-relaxed max-w-3xl mx-auto">
-          An integrated whole of multiple esoteric elements blending three facets together, interpreted side by side to cross analyze patterns.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Section: My Books (Coming Soon) -->
-  <section id="books" class="py-24 px-6 lg:px-12 max-w-6xl mx-auto border-t border-gold/10">
-    <div class="space-y-12">
-      <div class="text-center space-y-3">
-        <span class="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Coming Soon</span>
-        <h2 class="font-serif text-3xl sm:text-5xl text-cream font-normal">My Books</h2>
-        <div class="w-12 h-px bg-gold/40 mx-auto"></div>
-        <p class="text-xs sm:text-sm text-cream-muted font-light max-w-xl mx-auto pt-2">
-          Written works detailing the structural blueprints, analytical methods, and practical frameworks behind evolutionary esotericism.
-        </p>
-      </div>
-
-      <!-- Books Grid Preview -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        
-        <!-- Book 1 Card -->
-        <div class="p-8 sm:p-10 rounded-xl bg-burgundy-card border border-gold/25 gold-glow-border flex flex-col justify-between space-y-6 relative overflow-hidden group">
-          <div class="absolute top-0 right-0 px-4 py-1.5 bg-gold/10 border-b border-l border-gold/30 text-[10px] text-gold uppercase tracking-[0.25em] font-medium">
-            In Development
-          </div>
-
-          <div class="space-y-4 pt-2">
-            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center text-gold text-sm bg-burgundy-dark/60">
-              <i class="fa-solid fa-book-bookmark"></i>
-            </div>
-            <h3 class="font-serif text-2xl sm:text-3xl text-cream leading-tight">
-              Ara's Basic Book of Astrology, Tarot, and Numerology
-            </h3>
-            <p class="text-xs text-cream-muted font-light leading-relaxed">
-              A foundational guide to synthesized esoteric systems. Mapping natal geometry, archetypal card symbolism, and karmic numerology channels into a unified analytical lens.
-            </p>
-          </div>
-
-          <div class="pt-4 border-t border-gold/15 flex items-center justify-between text-[11px] text-gold tracking-widest uppercase font-light">
-            <span>Manuscript Preview</span>
-            <span class="opacity-60">Vol. I</span>
-          </div>
-        </div>
-
-        <!-- Book 2 Card -->
-        <div class="p-8 sm:p-10 rounded-xl bg-burgundy-card border border-gold/25 gold-glow-border flex flex-col justify-between space-y-6 relative overflow-hidden group">
-          <div class="absolute top-0 right-0 px-4 py-1.5 bg-gold/10 border-b border-l border-gold/30 text-[10px] text-gold uppercase tracking-[0.25em] font-medium">
-            In Development
-          </div>
-
-          <div class="space-y-4 pt-2">
-            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center text-gold text-sm bg-burgundy-dark/60">
-              <i class="fa-solid fa-compass-drafting"></i>
-            </div>
-            <h3 class="font-serif text-2xl sm:text-3xl text-cream leading-tight">
-              Ara's Astrology of Things
-            </h3>
-            <p class="text-xs text-cream-muted font-light leading-relaxed">
-              An exploration into real-world structural applications—applying astrological timing, house dynamics, and planetary dispositors to everyday environments, systems, and material manifestations.
-            </p>
-          </div>
-
-          <div class="pt-4 border-t border-gold/15 flex items-center justify-between text-[11px] text-gold tracking-widest uppercase font-light">
-            <span>Manuscript Preview</span>
-            <span class="opacity-60">Vol. II</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 2: Philosophy Section ("Structure Over Spectacle") -->
-  <section id="philosophy" class="py-24 px-6 lg:px-12 bg-burgundy-card/40 border-y border-gold/10">
-    <div class="max-w-4xl mx-auto space-y-8 text-center">
-      
-      <div class="space-y-4">
-        <span class="text-gold text-xs font-semibold tracking-[0.25em] uppercase">Ethical Philosophy</span>
-        <h2 class="font-serif text-3xl sm:text-5xl text-cream font-normal">Structure Over Spectacle</h2>
-        <div class="w-12 h-px bg-gold/50 mx-auto"></div>
-      </div>
-
-      <div class="space-y-6 text-cream-muted text-sm sm:text-base font-light leading-relaxed max-w-3xl mx-auto">
+  <!-- Section 1: The Pillars & Multi-System Matrix -->
+  <section id="matrix">
+    <div class="section-subtitle">The Pillars</div>
+    <h2 class="section-title">The Multi-System Matrix</h2>
+    
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-num">01</div>
+        <h3>Tropical Astrology</h3>
         <p>
-          Esoteric systems are often presented as mysterious, fatalistic magic. My work approaches them through a completely different lens: as ancient, highly refined geometric frameworks and psychological matrices designed to evaluate active dynamics, timing vectors, and life cycles.
+          Mapping natal chart positions, Whole Sign and Placidus house rulers, planetary dignities, and transit geometry to outline timing, wealth vectors, and relational dynamics.
         </p>
-        <p class="font-serif text-xl sm:text-2xl text-cream italic border-y border-gold/20 py-6 my-6">
-          "I believe clarity is sacred, and that insight should strengthen personal discernment rather than create dependence."
-        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-num">02</div>
+        <h3>Matrix of Destiny</h3>
         <p>
-          By removing superstition and focusing on structural analysis, every reading is constructed as an intellectual consultation—honoring your agency and supplying tactical perspectives for your lived reality.
+          Calculating personal numerology channels to analyze karmic tails, subconscious relationship blocks, financial flow zones, and soul potential programs.
         </p>
       </div>
 
+      <div class="pillar-card">
+        <div class="pillar-num">03</div>
+        <h3>Tarot & Oracle Archetypes</h3>
+        <p>
+          Utilizing multi-deck spreads to capture immediate psychological dynamics, environmental nuances, and micro-timing triggers to ground the chart reading.
+        </p>
+      </div>
+    </div>
+
+    <!-- The AstroTarotMatrix Horizontal System Box -->
+    <div class="system-box">
+      <h3>The AstroTarotMatrix System</h3>
+      <p>
+        An integrated whole of multiple esoteric elements blending three facets together, interpreted side by side to cross analyze patterns.
+      </p>
     </div>
   </section>
 
-  <!-- Section 3: Business Card Contact Block ("Connect") -->
-  <section id="connect" class="py-28 px-6 lg:px-12 max-w-4xl mx-auto text-center">
-    <div class="space-y-10">
-      
-      <div class="space-y-2">
-        <span class="text-gold text-xs font-semibold tracking-[0.25em] uppercase">Come Join Me</span>
-        <h2 class="font-serif text-3xl sm:text-4xl text-cream font-normal">Connect With Me</h2>
-      </div>
-
-      <!-- Luxury Business Card Container -->
-      <div class="max-w-md mx-auto p-8 sm:p-10 rounded-2xl bg-burgundy-card border border-gold/40 gold-glow-border text-center space-y-6 relative overflow-hidden">
-        
-        <!-- Subtle Card Header Accent -->
-        <div class="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center text-gold mx-auto text-lg bg-burgundy-dark/50">
-          <i class="fa-solid fa-moon"></i>
-        </div>
-
-        <div class="space-y-1">
-          <h3 class="font-serif text-2xl sm:text-3xl text-cream tracking-wide uppercase font-semibold">Ara the Witch</h3>
-          <p class="text-[10px] text-gold tracking-[0.3em] uppercase font-light">Astrology • Tarot • Numerology</p>
-        </div>
-
-        <div class="w-16 h-px bg-gold/30 mx-auto"></div>
-
-        <!-- Contact Links -->
-        <div class="space-y-4 pt-2 text-xs sm:text-sm font-light text-cream-muted">
-          
-          <a href="https://instagram.com/ara.the.witch" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center space-x-3 p-3 rounded-lg bg-burgundy-dark/60 border border-gold/10 hover:border-gold/40 hover:text-gold transition-all duration-300">
-            <i class="fa-brands fa-instagram text-gold text-base"></i>
-            <span class="tracking-widest">@ara.the.witch</span>
-          </a>
-
-          <a href="mailto:astrotarotmatrix@arathewitch.com" class="flex items-center justify-center space-x-3 p-3 rounded-lg bg-burgundy-dark/60 border border-gold/10 hover:border-gold/40 hover:text-gold transition-all duration-300">
-            <i class="fa-regular fa-envelope text-gold text-base"></i>
-            <span class="tracking-wide">astrotarotmatrix@arathewitch.com</span>
-          </a>
-
-        </div>
-
-        <div class="text-[9px] text-cream-dark uppercase tracking-widest pt-2">
-          arathewitch.com
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Reading Portal Callout -->
-  <section id="portal" class="py-20 px-6 lg:px-12 bg-burgundy-card/30 border-t border-gold/10 text-center">
-    <div class="max-w-3xl mx-auto space-y-6 p-10 sm:p-14 rounded-2xl bg-burgundy-card border border-gold/20">
-      
-      <span class="text-gold text-xs font-semibold tracking-[0.25em] uppercase">Private Consultations</span>
-      <h2 class="font-serif text-3xl sm:text-4xl text-cream font-normal">Explore Reading Offerings</h2>
-      <p class="text-xs sm:text-sm text-cream-muted font-light leading-relaxed max-w-xl mx-auto">
-        When you are ready to evaluate your natal architecture or request a full multi-system matrix synthesis, enter the dedicated consultation portal.
+  <!-- Section 2: Coming Soon - My Books -->
+  <div class="books-section">
+    <div class="books-container">
+      <div class="section-subtitle">Author & Research</div>
+      <h2 class="section-title">My Books</h2>
+      <p style="text-align: center; color: var(--text-muted); font-weight: 300; max-width: 600px; margin: 0 auto;">
+        Comprehensive written guides synthesizing complex astrological geometry, tarot symbolism, and numerological matrix mechanics into accessible study manuals.
       </p>
 
-      <div class="pt-2">
-        <a href="#services-portal" class="inline-block px-10 py-3.5 rounded-full border border-gold text-gold hover:bg-gold hover:text-burgundy-dark transition-all duration-300 text-xs tracking-[0.25em] uppercase font-medium">
-          Enter Reading Portal
+      <div class="books-grid">
+        <div class="book-card">
+          <span class="book-tag">Coming Soon</span>
+          <h4>Ara's Basic Book of Astrology, Tarot, and Numerology</h4>
+          <p>The foundational primer on multi-system matrix synthesis, planetary dignities, and archetypal card interpretation.</p>
+        </div>
+
+        <div class="book-card">
+          <span class="book-tag">In Development</span>
+          <h4>Ara's Astrology of Things</h4>
+          <p>An exploratory breakdown analyzing the structural cosmological signatures embedded within physical objects, environments, and material culture.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Philosophy -->
+  <section id="philosophy">
+    <div class="philosophy-container">
+      <div class="section-subtitle">Ethical Philosophy</div>
+      <h2 class="section-title">Structure Over Spectacle</h2>
+      
+      <p class="philosophy-text">
+        By cross-examining Tropical Astrology (house cusps, dignities, and transit geometry), Matrix of Destiny numerology, and the archetypal language of tarot, every reading becomes an analytical diagnosis—providing objective clarity so you can navigate life choices with sovereign authority.
+      </p>
+
+      <div class="quote-block">
+        "Clarity is sacred. Insight should strengthen your personal discernment rather than foster passive reliance."
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Business Card Contact Block -->
+  <section class="business-card-section" id="connect">
+    <div class="section-subtitle">Contact & Community</div>
+    <h2 class="section-title" style="margin-bottom: 3rem;">Connect With Me</h2>
+
+    <div class="business-card">
+      <div class="card-brand">AstroTarotMatrix</div>
+      <div class="card-sub">Astrology • Tarot • Numerology</div>
+      <div class="card-divider"></div>
+      
+      <div class="card-contacts">
+        <a href="https://instagram.com/ara.the.witch" target="_blank" class="contact-item">
+          <i class="fa-brands fa-instagram"></i>
+          <span>@ara.the.witch</span>
+        </a>
+        <a href="https://substack.com/@arathewitch" target="_blank" class="contact-item">
+          <i class="fa-solid fa-bookmark"></i>
+          <span>@arathewitch</span>
+        </a>
+        <a href="mailto:astrotarotmatrix@arathewitch.com" class="contact-item">
+          <i class="fa-regular fa-envelope"></i>
+          <span>astrotarotmatrix@arathewitch.com</span>
         </a>
       </div>
-
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-burgundy-dark border-t border-gold/10 py-12 px-6 lg:px-12 text-center text-xs text-cream-muted font-light space-y-6">
-    <div class="space-y-2">
-      <span class="font-serif text-xl tracking-[0.2em] text-cream uppercase block">Ara the Witch</span>
-      <span class="text-[10px] text-gold tracking-[0.25em] uppercase block">arathewitch.com • All Rights Reserved</span>
-    </div>
-
-    <p class="text-[10px] text-cream-dark pt-4">
-      © 2026 ARA THE WITCH. Designed for mathematical precision and esoteric synthesis.
-    </p>
+  <footer>
+    <p>© 2026 ASTROTAROTMATRIX • ALL RIGHTS RESERVED</p>
   </footer>
 
-  <script>
-    // Mobile navigation toggle logic
-    const menuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
-  </script>
 </body>
 </html>
