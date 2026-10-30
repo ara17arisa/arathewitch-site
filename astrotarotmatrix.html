@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The AstroTarotMatrix System | Ara the Witch</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            burgundy: {
+              DEFAULT: '#3b0005',
+              dark: '#220003',
+              card: '#2d0004',
+              hover: '#4a0007',
+            },
+            cream: {
+              DEFAULT: '#f4eae1',
+              muted: '#c4aead',
+              dark: '#8a7271',
+            },
+            gold: {
+              DEFAULT: '#d4af37',
+              light: '#f3e5ab',
+              dark: '#aa820a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .gold-glow {
+      box-shadow: 0 0 25px -5px rgba(170, 130, 10, 0.25);
+    }
+    .venn-region {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .venn-region:hover {
+      fill-opacity: 0.25;
+      stroke-width: 2.5;
+    }
+    .venn-region.active {
+      fill-opacity: 0.32;
+      stroke-width: 2.5;
+      filter: drop-shadow(0px 0px 10px rgba(170, 130, 10, 0.5));
+    }
+  </style>
+</head>
+<body class="bg-burgundy-dark text-cream font-sans antialiased selection:bg-burgundy-card selection:text-gold min-h-screen flex flex-col justify-between">
+
+  <!-- Navigation Bar -->
+  <nav class="fixed top-0 left-0 w-full z-50 bg-burgundy-dark/95 backdrop-blur-md border-b border-gold-dark/30">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+      
+      <!-- Brand / Logo -->
+      <a href="index.html" class="flex flex-col">
+        <span class="font-serif text-2xl tracking-[0.2em] text-cream font-semibold hover:text-gold transition-colors">ARA THE WITCH</span>
+        <span class="text-[9px] tracking-[0.3em] text-gold uppercase font-light">Esoteric Expert</span>
+      </a>
+
+      <!-- Desktop Links -->
+      <div class="hidden md:flex items-center space-x-10 text-xs tracking-[0.2em] uppercase font-light">
+        <a href="index.html" class="text-cream-muted hover:text-gold transition-colors">← Home</a>
+        <a href="index.html#books" class="text-cream-muted hover:text-gold transition-colors">My Books</a>
+        <a href="index.html#portal" class="px-5 py-2.5 rounded-full border border-gold-dark/60 text-gold hover:bg-gold hover:text-burgundy-dark transition-colors">Reading Portal</a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden text-cream hover:text-gold p-2 focus:outline-none" aria-label="Toggle Navigation Menu">
+        <i class="fa-solid fa-bars text-xl"></i>
+      </button>
+
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden bg-burgundy-card border-b border-gold-dark/30 px-6 py-6 space-y-4 text-xs tracking-[0.2em] uppercase font-light">
+      <a href="index.html" class="block text-cream-muted hover:text-gold transition-colors">← Home</a>
+      <a href="index.html#books" class="block text-cream-muted hover:text-gold transition-colors">My Books</a>
+      <a href="index.html#portal" class="inline-block mt-2 px-6 py-2.5 rounded-full border border-gold text-gold hover:bg-gold hover:text-burgundy-dark transition-colors">Reading Portal</a>
+    </div>
+  </nav>
+
+  <!-- Main Content Wrapper -->
+  <main class="flex-grow pt-32 pb-20">
+    
+    <!-- Hero / Header -->
+    <section class="px-6 lg:px-12 max-w-4xl mx-auto text-center space-y-4">
+      <h1 class="font-serif text-4xl sm:text-6xl text-cream font-normal leading-tight">
+        AstroTarotMatrix
+      </h1>
+      <div class="w-12 h-px bg-gold-dark/50 mx-auto"></div>
+      <p class="text-xs sm:text-sm text-cream-muted font-light leading-relaxed max-w-2xl mx-auto">
+        Select any circle or the central intersection below to examine each dimension of the analytical schematic.
+      </p>
+    </section>
+
+    <!-- Interactive Venn Diagram Section -->
+    <section class="py-8 px-4 max-w-4xl mx-auto flex flex-col items-center">
+      
+      <!-- SVG Venn Diagram -->
+      <div class="w-full max-w-md sm:max-w-lg relative select-none">
+        <svg viewBox="0 0 500 460" class="w-full h-auto overflow-visible">
+          <!-- Outer Circle 1: Tropical Astrology (Top Left) -->
+          <circle id="circle-astrology" cx="190" cy="180" r="130"
+            fill="#aa820a" fill-opacity="0.1" stroke="#aa820a" stroke-width="1.5"
+            class="venn-region active" onclick="selectRegion('astrology')" />
+
+          <!-- Outer Circle 2: Tarot & Tools (Top Right) -->
+          <circle id="circle-tarot" cx="310" cy="180" r="130"
+            fill="#aa820a" fill-opacity="0.1" stroke="#aa820a" stroke-width="1.5"
+            class="venn-region" onclick="selectRegion('tarot')" />
+
+          <!-- Outer Circle 3: Matrix of Destiny (Bottom Center) -->
+          <circle id="circle-matrix" cx="250" cy="275" r="130"
+            fill="#aa820a" fill-opacity="0.1" stroke="#aa820a" stroke-width="1.5"
+            class="venn-region" onclick="selectRegion('matrix')" />
+
+          <!-- Central Intersection Trigger -->
+          <path id="circle-synthesis" 
+            d="M 250 165 A 130 130 0 0 1 310 180 A 130 130 0 0 1 250 275 A 130 130 0 0 1 190 180 A 130 130 0 0 1 250 165 Z" 
+            fill="#d4af37" fill-opacity="0.2" stroke="#d4af37" stroke-width="1.8"
+            class="venn-region" onclick="selectRegion('synthesis')" />
+
+          <!-- SVG Text Labels -->
+          <text x="140" y="140" text-anchor="middle" fill="#f4eae1" class="text-[13px] font-serif pointer-events-none tracking-wide">Astrology</text>
+          <text x="140" y="158" text-anchor="middle" fill="#c4aead" class="text-[11px] font-sans uppercase tracking-widest pointer-events-none">Analysis</text>
+
+          <text x="360" y="140" text-anchor="middle" fill="#f4eae1" class="text-[13px] font-serif pointer-events-none tracking-wide">Tarot</text>
+          <text x="360" y="158" text-anchor="middle" fill="#c4aead" class="text-[11px] font-sans uppercase tracking-widest pointer-events-none">Divination</text>
+
+          <text x="250" y="340" text-anchor="middle" fill="#f4eae1" class="text-[13px] font-serif pointer-events-none tracking-wide">Matrix of Destiny</text>
+          <text x="250" y="358" text-anchor="middle" fill="#c4aead" class="text-[11px] font-sans uppercase tracking-widest pointer-events-none">Numerology</text>
+
+          <text x="250" y="210" text-anchor="middle" fill="#f4eae1" class="text-[10px] font-semibold tracking-[0.2em] uppercase pointer-events-none">Integration</text>
+        </svg>
+      </div>
+
+      <!-- Quick Selector Buttons -->
+      <div class="flex flex-wrap justify-center gap-2 mt-6">
+        <button onclick="selectRegion('astrology')" id="tab-astrology" class="px-4 py-2 rounded-full border border-gold-dark/40 text-xs font-light text-cream hover:border-gold transition-all">Analytical Astrology</button>
+        <button onclick="selectRegion('tarot')" id="tab-tarot" class="px-4 py-2 rounded-full border border-gold-dark/40 text-xs font-light text-cream hover:border-gold transition-all">Tarot & Tools</button>
+        <button onclick="selectRegion('matrix')" id="tab-matrix" class="px-4 py-2 rounded-full border border-gold-dark/40 text-xs font-light text-cream hover:border-gold transition-all">Matrix of Destiny</button>
+        <button onclick="selectRegion('synthesis')" id="tab-synthesis" class="px-4 py-2 rounded-full border border-gold-dark text-xs font-semibold text-gold bg-gold/10 hover:bg-gold hover:text-burgundy-dark transition-all">AstroTarotMatrix</button>
+      </div>
+
+    </section>
+
+    <!-- Dynamic Card Display Section -->
+    <section class="px-6 lg:px-12 max-w-3xl mx-auto mt-4">
+      <div id="methodology-card" class="bg-burgundy-card border border-gold-dark/30 rounded-xl p-8 sm:p-10 space-y-6 gold-glow transition-all duration-300">
+        <!-- Dynamic JS content injected here -->
+      </div>
+    </section>
+
+    <!-- Callout Section -->
+    <section class="pt-20 px-6 lg:px-12 max-w-4xl mx-auto text-center space-y-6">
+      <h2 class="font-serif text-3xl sm:text-4xl text-cream font-normal">Ready to Evaluate Your Blueprint?</h2>
+      <p class="text-xs sm:text-sm text-cream-muted font-light max-w-xl mx-auto leading-relaxed">
+        When you are ready to evaluate your natal chart or request a full multi-system matrix synthesis, enter the dedicated consultation portal.
+      </p>
+      <div class="pt-2">
+        <a href="index.html#portal" class="inline-block px-10 py-3 rounded-full border border-gold-dark text-gold hover:bg-gold hover:text-burgundy-dark transition-all duration-300 text-xs font-semibold tracking-[0.2em] uppercase">
+          Enter Reading Portal
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-burgundy-dark border-t border-gold-dark/20 py-12 px-6 lg:px-12 text-center text-xs font-light text-cream-muted space-y-2">
+    <div class="space-y-3">
+      <span class="text-white text-xs font-semibold tracking-[0.25em] uppercase block">Connect With Me</span>
+      <div class="flex justify-center items-center gap-6 py-1">
+        <a href="https://instagram.com/ara.the.witch" target="_blank" class="text-gold/80 hover:text-gold transition-colors text-lg" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://substack.com/@arathewitch" target="_blank" class="text-gold/80 hover:text-gold transition-colors text-lg" aria-label="Substack">
+          <i class="fa-solid fa-bookmark"></i>
+        </a>
+        <a href="mailto:astrotarotmatrix@arathewitch.com" class="text-gold/80 hover:text-gold transition-colors text-lg" aria-label="Email">
+          <i class="fa-regular fa-envelope"></i>
+        </a>
+      </div>
+      <p class="text-[10px] text-cream-dark pt-2">
+        © 2026 AstroTarotMatrix. Designed for mathematical precision and esoteric synthesis.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Page Logic Scripts -->
+  <script>
+    // Mobile Navigation Drawer Toggle
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileBtn && mobileMenu) {
+      mobileBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Interactive Data Store
+    const data = {
+      astrology: {
+        title: "Astrology",
+        description: "Astrological evaluation combines geometric spatial placement with essential planetary dignities to establish the primary natal schematic.",
+        points: [
+          {
+            icon: "fa-compass",
+            title: "Placidus & Whole Sign Integration",
+            text: "Whole Sign houses establish clear house ruler placement and foundational chart framing, while Placidus degrees pinpoint exact house cusps and intercepted dynamics."
+          },
+          {
+            icon: "fa-circle-nodes",
+            title: "Dual Planetary Rulership",
+            text: "Traditional planetary dignities (Mars for Scorpio, Saturn for Aquarius, Jupiter for Pisces) anchor essential chart strength and sect dynamics, while modern outer planets illuminate collective patterns."
+          }
+        ]
+      },
+      tarot: {
+        title: "Tarot & Divination Tools",
+        description: "Divination is executed as a rigorous diagnostic system incorporating symbolic correspondences, numerology, and physical instruments.",
+        points: [
+          {
+            icon: "fa-layer-group",
+            title: "Multidimensional Card Evaluation",
+            text: "Every pull synthesizes traditional Rider-Waite-Smith associations, numerology, card imagery, elemental suits, Major versus Minor Arcana weighting, and natal astrological attributions."
+          },
+          {
+            icon: "fa-dice",
+            title: "Enhanced Auxiliary Tooling",
+            text: "Core spreads are augmented using specialized oracle decks, planetary astro dice, Elder Futhark runes, and dedicated yes/no coins for directional clarity."
+          },
+          {
+            icon: "fa-diagram-project",
+            title: "Adaptive Diagnostic Spreads",
+            text: "Utilizing custom spreads tailored to specific situation dynamics alongside intuitive free-form pulls to examine real-time psychological states."
+          }
+        ]
+      },
+      matrix: {
+        title: "Matrix of Destiny",
+        description: "Decoding numerical channels to map subconscious programming, karmic patterns, and age transits across physical and spiritual planes.",
+        points: [
+          {
+            icon: "fa-chart-pie",
+            title: "Programs & Energy Zones",
+            text: "Detailed decoding of financial flow channels, relationship lines, and subconscious karmic tail programs."
+          },
+          {
+            icon: "fa-dna",
+            title: "Material vs. Spiritual & Personal vs. Ancestral Lineages",
+            text: "Clear separation between individual soul karma and inherited ancestral lines across maternal and paternal lineages."
+          },
+          {
+            icon: "fa-circle-dot",
+            title: "Chakra Integration",
+            text: "Mapping Major Arcanas directly to the 7 main chakra centers to identify somatic energy patterns."
+          },
+          {
+            icon: "fa-clock-rotate-left",
+            title: "Matrix Transits",
+            text: "Tracking active age-based numerical cycles to highlight which specific energy zone or program is active in real time."
+          }
+        ]
+      },
+      synthesis: {
+        title: "The AstroTarotMatrix Synthesis",
+        description: "The unified schematic where astrological timing, divinatory diagnostics, and numerical matrix transits converge.",
+        points: [
+          {
+            icon: "fa-atom",
+            title: "Cross-System Diagnostics",
+            text: "Cross-referencing natal chart placements with active Matrix of Destiny age transits and real-time Tarot spreads for structural clarity."
+          },
+          {
+            icon: "fa-route",
+            title: "Unified Personal Blueprint",
+            text: "Synthesizing three distinct esoteric traditions into a single cohesive consultation without reliance on single-system limitations."
+          }
+        ]
+      }
+    };
+
+    function selectRegion(regionId) {
+      const regions = ['astrology', 'tarot', 'matrix', 'synthesis'];
+      regions.forEach(id => {
+        const el = document.getElementById(`circle-${id}`);
+        const tab = document.getElementById(`tab-${id}`);
+        if (id === regionId) {
+          el.classList.add('active');
+          if (tab) tab.classList.add('bg-gold/20', 'border-gold', 'text-gold');
+        } else {
+          el.classList.remove('active');
+          if (tab) tab.classList.remove('bg-gold/20', 'text-gold');
+        }
+      });
+
+      const item = data[regionId];
+      const cardContainer = document.getElementById('methodology-card');
+
+      let pointsHTML = item.points.map(p => `
+        <div class="flex items-start gap-4">
+          <div class="w-7 h-7 rounded-full bg-gold/10 border border-gold-dark/40 flex items-center justify-center text-gold text-xs shrink-0 mt-0.5">
+            <i class="fa-solid ${p.icon}"></i>
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-cream text-sm font-medium">${p.title}</h3>
+            <p class="text-cream-muted text-xs font-light leading-relaxed">${p.text}</p>
+          </div>
+        </div>
+      `).join('');
+
+      cardContainer.innerHTML = `
+        <h2 class="font-serif text-2xl sm:text-3xl text-cream border-b border-gold-dark/20 pb-3">${item.title}</h2>
+        <p class="text-xs sm:text-sm text-cream-muted font-light leading-relaxed">
+          ${item.description}
+        </p>
+        <div class="space-y-5 pt-2">
+          ${pointsHTML}
+        </div>
+      `;
+    }
+
+    // Initialize default view on window load
+    window.onload = function() {
+      selectRegion('astrology');
+    };
+  </script>
+
+</body>
+</html>
